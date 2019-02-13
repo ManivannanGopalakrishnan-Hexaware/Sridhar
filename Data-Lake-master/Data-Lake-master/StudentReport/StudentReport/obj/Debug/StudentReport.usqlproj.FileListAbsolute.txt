@@ -1,0 +1,4 @@
+D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\obj\Debug\StudentReport.usqlprojAssemblyReference.cache
+D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\obj\Debug\StudentReport.usqlproj.CoreCompileInputs.cache
+D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Algebra.xml
+D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\obj\Debug\Algebra.xml

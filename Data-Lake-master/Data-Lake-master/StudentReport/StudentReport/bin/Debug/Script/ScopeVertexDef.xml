@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1">
+  <ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true">
+    <operator id="Extract_0" uid="1" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor">
+      <input id="Extract_0" uid="1" schema="name:string,id:int,Class:string" inputIndex="0" numberOfInputs="ALL" />
+      <output id="SV1_Extract_out0" uid="2" schema="name:string,id:int" outputIndex="0" numberOfOutputs="1" />
+    </operator>
+  </ScopeVertex>
+  <ScopeVertex id="SV2_Extract" cppReady="true" nativeOnly="true">
+    <operator id="Extract_1" uid="3" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor">
+      <input id="Extract_1" uid="3" schema="id:int,maths:int,science:int,social:int,tamil:int,english:int" inputIndex="0" numberOfInputs="ALL" />
+      <output id="Extract_1_Data0" uid="4" schema="id:int,maths:int,science:int,social:int,tamil:int,english:int" />
+    </operator>
+    <operator id="Process_2" uid="5" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_6">
+      <input id="Extract_1_Data0" uid="4" schema="id:int,maths:int,science:int,social:int,tamil:int,english:int" />
+      <output id="SV2_Extract_out0" uid="6" schema="maths:int,science:int,social:int,tamil:int,english:int,id1:int" outputIndex="0" numberOfOutputs="1" />
+    </operator>
+  </ScopeVertex>
+  <ScopeVertex id="SV3_Combine_Split" cppReady="true" nativeOnly="true">
+    <operator id="HashJoin_3" uid="7" assemblyName="__ScopeCodeGen__.dll" className="HashCombine" args="-key id1|id">
+      <input id="SV2_Extract_out0" uid="6" schema="maths:int,science:int,social:int,tamil:int,english:int,id1:int" inputIndex="1" numberOfInputs="1" />
+      <input id="SV1_Extract_out0" uid="2" schema="name:string,id:int" inputIndex="0" numberOfInputs="1" />
+      <output id="HashJoin_3_Data0" uid="8" schema="name:string,id:int,maths:int,science:int,social:int,tamil:int,english:int" />
+    </operator>
+    <operator id="Split_4" uid="9" assemblyName="ScopeRuntime.exe" className="ScopeRuntime.ScopeFilterSelectSplitter">
+      <input id="HashJoin_3_Data0" uid="8" schema="name:string,id:int,maths:int,science:int,social:int,tamil:int,english:int" />
+      <output id="SV3_Combine_Split_out0" uid="10" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" outputIndex="0" numberOfOutputs="1" finalOutput="true" assemblyName="__ScopeCodeGen__.dll" className="SqlSplitOutputter_1" encoding="Text" args="" />
+      <output id="SV3_Combine_Split_out1" uid="11" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" outputIndex="1" numberOfOutputs="1" assemblyName="__ScopeCodeGen__.dll" className="SqlSplitOutputter_2" />
+    </operator>
+  </ScopeVertex>
+  <ScopeVertex id="SV4_Process" cppReady="true" nativeOnly="true">
+    <operator id="Process_6" uid="13" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_7">
+      <input id="SV3_Combine_Split_out1" uid="11" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" inputIndex="0" numberOfInputs="1" />
+      <output id="Process_6_Data0" uid="14" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" />
+    </operator>
+    <operator id="Output_7" uid="15" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter">
+      <input id="Process_6_Data0" uid="14" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" />
+      <output id="SV4_Process_out0" uid="15" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" outputIndex="0" numberOfOutputs="1" finalOutput="true" />
+    </operator>
+  </ScopeVertex>
+  <ScopeVertex id="SV5_Process" cppReady="true" nativeOnly="true">
+    <operator id="Process_8" uid="16" assemblyName="__ScopeCodeGen__.dll" className="ScopeSorter_1" args="-keys total#_DESC">
+      <input id="SV3_Combine_Split_out1" uid="11" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" inputIndex="0" numberOfInputs="1" />
+      <output id="Process_8_Data0" uid="17" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" />
+    </operator>
+    <operator id="Process_9" uid="18" assemblyName="__ScopeCodeGen__.dll" className="SequenceProject">
+      <input id="Process_8_Data0" uid="17" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" />
+      <output id="Process_9_Data0" uid="19" schema="rank:long?,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" />
+    </operator>
+    <operator id="Process_10" uid="20" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_8">
+      <input id="Process_9_Data0" uid="19" schema="rank:long?,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" />
+      <output id="Process_10_Data0" uid="21" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" />
+    </operator>
+    <operator id="Output_11" uid="22" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter">
+      <input id="Process_10_Data0" uid="21" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" />
+      <output id="SV5_Process_out0" uid="22" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" outputIndex="0" numberOfOutputs="1" finalOutput="true" />
+    </operator>
+  </ScopeVertex>
+</ScopeVertices>

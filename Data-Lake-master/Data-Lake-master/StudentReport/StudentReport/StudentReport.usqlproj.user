@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <StartFile>Script.usql</StartFile>
+    <ActiveFile>Script.usql</ActiveFile>
+    <BuildClusterPlanProperty>False</BuildClusterPlanProperty>
+  </PropertyGroup>
+  <ItemGroup>
+    <ScriptUserData Include="Script.usql">
+      <UseLocalComputeAccount>false</UseLocalComputeAccount>
+      <LocalComputeAccount>DataLakeLocalCA:localcomputeaccount</LocalComputeAccount>
+      <LocalDatabase>master</LocalDatabase>
+      <LocalSchema>dbo</LocalSchema>
+      <ClusterComputeAccount>DataLakeCA:sridhar (37887@hexaware.com)</ClusterComputeAccount>
+      <ClusterDatabase>master</ClusterDatabase>
+      <ClusterSchema>dbo</ClusterSchema>
+      <Parallelism>5</Parallelism>
+      <RecurrenceName>Script_ADLVSTool</RecurrenceName>
+      <RecurrenceId>28af6990-ef8b-46b2-bcc7-d1f7fc087545</RecurrenceId>
+    </ScriptUserData>
+  </ItemGroup>
+</Project>

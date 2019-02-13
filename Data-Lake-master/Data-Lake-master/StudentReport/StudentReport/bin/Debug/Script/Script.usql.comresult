@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<CommonCompileResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <InputStreams>
+    <string>C:\Users\37887\AppData\Local\USQLDataRoot\Student\Student.csv</string>
+    <string>C:\Users\37887\AppData\Local\USQLDataRoot\Student\Marksheet.csv</string>
+  </InputStreams>
+  <OutputStreams>
+    <OutputStreamInfo>
+      <Path>C:\Users\37887\AppData\Local\USQLDataRoot\student/StudentMarksheet.csv</Path>
+      <SchemaString />
+      <IsBinary>false</IsBinary>
+      <IsSStream>false</IsSStream>
+      <TableName />
+    </OutputStreamInfo>
+    <OutputStreamInfo>
+      <Path>C:\Users\37887\AppData\Local\USQLDataRoot\student/Total.csv</Path>
+      <SchemaString />
+      <IsBinary>false</IsBinary>
+      <IsSStream>false</IsSStream>
+      <TableName />
+    </OutputStreamInfo>
+    <OutputStreamInfo>
+      <Path>C:\Users\37887\AppData\Local\USQLDataRoot\student/rank.csv</Path>
+      <SchemaString />
+      <IsBinary>false</IsBinary>
+      <IsSStream>false</IsSStream>
+      <TableName />
+    </OutputStreamInfo>
+  </OutputStreams>
+  <ScriptPath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\Script.usql</ScriptPath>
+  <ScopeVertexDefinitionPath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\ScopeVertexDef.xml</ScopeVertexDefinitionPath>
+  <ScopeVertexDefinition>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1"&gt;
+  &lt;ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="Extract_0" uid="1" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor"&gt;
+      &lt;input id="Extract_0" uid="1" schema="name:string,id:int,Class:string" inputIndex="0" numberOfInputs="ALL" /&gt;
+      &lt;output id="SV1_Extract_out0" uid="2" schema="name:string,id:int" outputIndex="0" numberOfOutputs="1" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+  &lt;ScopeVertex id="SV2_Extract" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="Extract_1" uid="3" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor"&gt;
+      &lt;input id="Extract_1" uid="3" schema="id:int,maths:int,science:int,social:int,tamil:int,english:int" inputIndex="0" numberOfInputs="ALL" /&gt;
+      &lt;output id="Extract_1_Data0" uid="4" schema="id:int,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Process_2" uid="5" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_6"&gt;
+      &lt;input id="Extract_1_Data0" uid="4" schema="id:int,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+      &lt;output id="SV2_Extract_out0" uid="6" schema="maths:int,science:int,social:int,tamil:int,english:int,id1:int" outputIndex="0" numberOfOutputs="1" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+  &lt;ScopeVertex id="SV3_Combine_Split" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="HashJoin_3" uid="7" assemblyName="__ScopeCodeGen__.dll" className="HashCombine" args="-key id1|id"&gt;
+      &lt;input id="SV2_Extract_out0" uid="6" schema="maths:int,science:int,social:int,tamil:int,english:int,id1:int" inputIndex="1" numberOfInputs="1" /&gt;
+      &lt;input id="SV1_Extract_out0" uid="2" schema="name:string,id:int" inputIndex="0" numberOfInputs="1" /&gt;
+      &lt;output id="HashJoin_3_Data0" uid="8" schema="name:string,id:int,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Split_4" uid="9" assemblyName="ScopeRuntime.exe" className="ScopeRuntime.ScopeFilterSelectSplitter"&gt;
+      &lt;input id="HashJoin_3_Data0" uid="8" schema="name:string,id:int,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+      &lt;output id="SV3_Combine_Split_out0" uid="10" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" outputIndex="0" numberOfOutputs="1" finalOutput="true" assemblyName="__ScopeCodeGen__.dll" className="SqlSplitOutputter_1" encoding="Text" args="" /&gt;
+      &lt;output id="SV3_Combine_Split_out1" uid="11" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" outputIndex="1" numberOfOutputs="1" assemblyName="__ScopeCodeGen__.dll" className="SqlSplitOutputter_2" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+  &lt;ScopeVertex id="SV4_Process" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="Process_6" uid="13" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_7"&gt;
+      &lt;input id="SV3_Combine_Split_out1" uid="11" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" inputIndex="0" numberOfInputs="1" /&gt;
+      &lt;output id="Process_6_Data0" uid="14" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Output_7" uid="15" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter"&gt;
+      &lt;input id="Process_6_Data0" uid="14" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" /&gt;
+      &lt;output id="SV4_Process_out0" uid="15" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" outputIndex="0" numberOfOutputs="1" finalOutput="true" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+  &lt;ScopeVertex id="SV5_Process" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="Process_8" uid="16" assemblyName="__ScopeCodeGen__.dll" className="ScopeSorter_1" args="-keys total#_DESC"&gt;
+      &lt;input id="SV3_Combine_Split_out1" uid="11" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" inputIndex="0" numberOfInputs="1" /&gt;
+      &lt;output id="Process_8_Data0" uid="17" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Process_9" uid="18" assemblyName="__ScopeCodeGen__.dll" className="SequenceProject"&gt;
+      &lt;input id="Process_8_Data0" uid="17" schema="total:int,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+      &lt;output id="Process_9_Data0" uid="19" schema="rank:long?,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Process_10" uid="20" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_8"&gt;
+      &lt;input id="Process_9_Data0" uid="19" schema="rank:long?,id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" /&gt;
+      &lt;output id="Process_10_Data0" uid="21" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Output_11" uid="22" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter"&gt;
+      &lt;input id="Process_10_Data0" uid="21" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" /&gt;
+      &lt;output id="SV5_Process_out0" uid="22" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" outputIndex="0" numberOfOutputs="1" finalOutput="true" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+&lt;/ScopeVertices&gt;</ScopeVertexDefinition>
+  <AlgebraPath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\__script__.abr</AlgebraPath>
+  <Algebra>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScriptAndGraph GraphType="VertexCommands"&gt;
+  &lt;Vertices count="5"&gt;
+    &lt;Vertex index="1" command="-scopeVertex SV1_Extract  -i C:\Users\37887\AppData\Local\USQLDataRoot\Student\Student.csv  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0" /&gt;
+    &lt;Vertex index="2" command="-scopeVertex SV2_Extract  -i C:\Users\37887\AppData\Local\USQLDataRoot\Student\Marksheet.csv  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV2_Extract_out0" /&gt;
+    &lt;Vertex index="3" command="-scopeVertex SV3_Combine_Split  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -ichannel SV1_Extract_out0 -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV2_Extract_out0 -ichannel SV2_Extract_out0  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out0(WITH_HEADER) -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1" /&gt;
+    &lt;Vertex index="4" command="-scopeVertex SV4_Process  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -ichannel SV3_Combine_Split_out1  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV4_Process_out0(WITH_HEADER)" /&gt;
+    &lt;Vertex index="5" command="-scopeVertex SV5_Process  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -ichannel SV3_Combine_Split_out1  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV5_Process_out0(WITH_HEADER)" /&gt;
+    &lt;Vertex command="-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv" /&gt;
+    &lt;Vertex command="-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV4_Process_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv" /&gt;
+    &lt;Vertex command="-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV5_Process_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv" /&gt;
+  &lt;/Vertices&gt;
+  &lt;Outputs&gt;
+    &lt;Output path="C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv" isBinary="False" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" /&gt;
+    &lt;Output path="C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv" isBinary="False" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" /&gt;
+    &lt;Output path="C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv" isBinary="False" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" /&gt;
+  &lt;/Outputs&gt;
+  &lt;graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough"&gt;
+    &lt;process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="125829121" nativeExecutionMemorySize="268435456" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True"&gt;
+      &lt;input id="Extract_0[ALL]" streamSize="102"&gt;
+        &lt;cosmosStream cosmosPath="C:\Users\37887\AppData\Local\USQLDataRoot\Student\Student.csv" streamSize="102" /&gt;
+      &lt;/input&gt;
+      &lt;output id="SV1_Extract_out0" /&gt;
+    &lt;/process&gt;
+    &lt;process id="SV2_Extract" command="ScopeEngine.dll -scopeVertex SV2_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="125829121" nativeExecutionMemorySize="285212672" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True"&gt;
+      &lt;input id="Extract_1[ALL]" streamSize="147"&gt;
+        &lt;cosmosStream cosmosPath="C:\Users\37887\AppData\Local\USQLDataRoot\Student\Marksheet.csv" streamSize="147" /&gt;
+      &lt;/input&gt;
+      &lt;output id="SV2_Extract_out0" /&gt;
+    &lt;/process&gt;
+    &lt;process id="SV3_Combine_Split" command="ScopeEngine.dll -scopeVertex SV3_Combine_Split" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="67108868" nativeExecutionMemorySize="5851054076" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True"&gt;
+      &lt;input id="SV1_Extract_out0" /&gt;
+      &lt;input id="SV2_Extract_out0" /&gt;
+      &lt;output id="SV3_Combine_Split_out0" cosmosStream="C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv" /&gt;
+      &lt;output id="SV3_Combine_Split_out1" /&gt;
+    &lt;/process&gt;
+    &lt;process id="SV4_Process" command="ScopeEngine.dll -scopeVertex SV4_Process" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="33554434" nativeExecutionMemorySize="8388608" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True"&gt;
+      &lt;input id="SV3_Combine_Split_out1" /&gt;
+      &lt;output id="SV4_Process_out0" cosmosStream="C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv" /&gt;
+    &lt;/process&gt;
+    &lt;process id="SV5_Process" command="ScopeEngine.dll -scopeVertex SV5_Process" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="58720259" nativeExecutionMemorySize="5859442685" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True"&gt;
+      &lt;input id="SV3_Combine_Split_out1" /&gt;
+      &lt;output id="SV5_Process_out0" cosmosStream="C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv" /&gt;
+    &lt;/process&gt;
+  &lt;/graph&gt;
+  &lt;Scopescript&gt;// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+@student = EXTRACT name string, id int, Class string FROM "/Student/Student.csv" USING Extractors.Csv();
+
+@marksheet = EXTRACT id int, maths int, science int, social int, tamil int, english int FROM "/Student/Marksheet.csv" USING Extractors.Csv();
+
+@result = SELECT stu.id, stu.name, mrk.maths, mrk.science, mrk.social, mrk.tamil, mrk.english FROM @student AS stu JOIN @marksheet AS mrk ON stu.id == mrk.id;
+
+OUTPUT @result
+TO "/student/StudentMarksheet.csv"
+USING Outputters.Csv();
+
+@total = SELECT id, name, maths, science, social, tamil, english, ((maths + science + social + tamil + english) / 5) AS total FROM @result;
+
+OUTPUT @total
+TO "/student/Total.csv"
+USING Outputters.Csv();
+
+@rank = SELECT *, RANK() OVER(ORDER BY total DESC) AS rank FROM @total;
+
+OUTPUT @rank
+TO "/student/rank.csv"
+USING Outputters.Csv();
+
+
+
+
+
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+&lt;/Scopescript&gt;
+  &lt;Optimization succeeded="true" time="00:00:00.7856317" latency="-1" totalCost="-1" /&gt;
+  &lt;ScopeVertexAnnotations&gt;
+    &lt;ScopeVertex name="SV1_Extract"&gt;
+      &lt;Operation annotation="EXTRACT USING IExtractor" /&gt;
+    &lt;/ScopeVertex&gt;
+    &lt;ScopeVertex name="SV2_Extract"&gt;
+      &lt;Operation annotation="EXTRACT USING IExtractor" /&gt;
+    &lt;/ScopeVertex&gt;
+    &lt;ScopeVertex name="SV4_Process"&gt;
+      &lt;Operation annotation="OUTPUT USING IOutputter" /&gt;
+    &lt;/ScopeVertex&gt;
+    &lt;ScopeVertex name="SV5_Process"&gt;
+      &lt;Operation annotation="OUTPUT USING IOutputter" /&gt;
+    &lt;/ScopeVertex&gt;
+  &lt;/ScopeVertexAnnotations&gt;
+&lt;/ScriptAndGraph&gt;</Algebra>
+  <ErrorList />
+  <WarningList />
+  <HelperCodePath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\__ScopeCodeGenEngine__.dll.cpp</HelperCodePath>
+  <ResourceList />
+  <ReferenceList />
+  <ClusterResourceList />
+  <LocalRunSteps>
+    <string>-scopeVertex SV1_Extract  -i C:\Users\37887\AppData\Local\USQLDataRoot\Student\Student.csv  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -managedMemorySize 0</string>
+    <string>-scopeVertex SV2_Extract  -i C:\Users\37887\AppData\Local\USQLDataRoot\Student\Marksheet.csv  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV2_Extract_out0 -managedMemorySize 0</string>
+    <string>-scopeVertex SV3_Combine_Split  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -ichannel SV1_Extract_out0 -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV2_Extract_out0 -ichannel SV2_Extract_out0  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out0(WITH_HEADER) -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -managedMemorySize 0</string>
+    <string>-scopeVertex SV4_Process  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -ichannel SV3_Combine_Split_out1  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV4_Process_out0(WITH_HEADER) -managedMemorySize 0</string>
+    <string>-scopeVertex SV5_Process  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -ichannel SV3_Combine_Split_out1  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV5_Process_out0(WITH_HEADER) -managedMemorySize 0</string>
+    <string>-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv -s "id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int"</string>
+    <string>-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV4_Process_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv -s "id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int"</string>
+    <string>-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV5_Process_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv -s "id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?"</string>
+  </LocalRunSteps>
+  <LocalRunCachePath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script</LocalRunCachePath>
+  <LocalRunTempPath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP</LocalRunTempPath>
+  <LocalRunRuntimePath>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script</LocalRunRuntimePath>
+  <ScopeWorkingDir>D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script</ScopeWorkingDir>
+</CommonCompileResult>

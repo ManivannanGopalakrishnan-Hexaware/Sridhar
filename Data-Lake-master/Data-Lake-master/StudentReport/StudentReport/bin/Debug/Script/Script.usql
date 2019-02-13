@@ -1,0 +1,36 @@
+// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+@student = EXTRACT name string, id int, Class string FROM "/Student/Student.csv" USING Extractors.Csv();
+
+@marksheet = EXTRACT id int, maths int, science int, social int, tamil int, english int FROM "/Student/Marksheet.csv" USING Extractors.Csv();
+
+@result = SELECT stu.id, stu.name, mrk.maths, mrk.science, mrk.social, mrk.tamil, mrk.english FROM @student AS stu JOIN @marksheet AS mrk ON stu.id == mrk.id;
+
+OUTPUT @result
+TO "/student/StudentMarksheet.csv"
+USING Outputters.Csv();
+
+@total = SELECT id, name, maths, science, social, tamil, english, ((maths + science + social + tamil + english) / 5) AS total FROM @result;
+
+OUTPUT @total
+TO "/student/Total.csv"
+USING Outputters.Csv();
+
+@rank = SELECT *, RANK() OVER(ORDER BY total DESC) AS rank FROM @total;
+
+OUTPUT @rank
+TO "/student/rank.csv"
+USING Outputters.Csv();
+
+
+
+
+
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+

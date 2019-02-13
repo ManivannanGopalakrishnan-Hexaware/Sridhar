@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CSSRelatedInfo>
+  <OptimizerPlanInfo signatureVersion="1">
+    <TableScan present="True" occurrence="2" />
+    <PartitionSeek present="False" occurrence="0" />
+    <PartitionRange present="False" occurrence="0" />
+    <IndexSeek present="False" occurrence="0" />
+    <IndexRange present="False" occurrence="0" />
+    <Join present="True" occurrence="1" />
+    <GroupByAgg present="False" occurrence="0" />
+    <UDProcessor present="False" occurrence="0" />
+    <UDReducer present="False" occurrence="0" />
+    <UDCombiner present="False" occurrence="0" />
+    <UDMultiProcessor present="False" occurrence="0" />
+    <Top present="False" occurrence="0" />
+    <Costs>
+      <ExtractCardinality>8.05297297297297</ExtractCardinality>
+      <InputSize>249</InputSize>
+      <OutputCardinality>9.792</OutputCardinality>
+      <NumTable>2</NumTable>
+      <DataTransferVolume>0</DataTransferVolume>
+      <Latency>-1</Latency>
+      <TotalCost>-1</TotalCost>
+      <EstimatedNumEdges>0</EstimatedNumEdges>
+    </Costs>
+    <OptimizerTrees>
+<InputTree>
+    <LogOp Id="LogOp_Sequence">
+      <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+      <LogOp Id="LogOp_Output" Table="C:\Users\37887\AppData\Local\USQLDataRoot\student/StudentMarksheet.csv" XMode="All" Out="id,name,maths,science,social,tamil,english" Udf="IOutputter">
+        <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+        <LogOp Id="LogOp_RestrRemap" Remove="name,id,Class,maths,science,social,tamil,english,id1" Remap="english#english,id#id,maths#maths,name#name,science#science,social#social,tamil#tamil">
+          <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+          <LogOp Id="LogOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__result" CSRoot="Common" TotalConsumers="2">
+            <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+            <LogOp Id="LogOp_Join">
+              <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False" Card="3.264" AvgRowLength="44"/></OpInfo>
+              <LogOp Id="LogOp_Extract" Table="C:\Users\37887\AppData\Local\USQLDataRoot\Student/Student.csv" XMode="Serial" Udf="IExtractor">
+                <OpInfo><TableGroupProperties Grp="0.0" Remotable="False" Card="4.08" AvgRowLength="20"/></OpInfo>
+              </LogOp>
+              <LogOp Id="LogOp_RestrRemap" Remove="id" Remap="id1#id">
+                <OpInfo><TableGroupProperties Grp="2.0" Remotable="False" Card="3.97297" AvgRowLength="24"/></OpInfo>
+                <LogOp Id="LogOp_Extract" Table="C:\Users\37887\AppData\Local\USQLDataRoot\Student/Marksheet.csv" XMode="Serial" Udf="IExtractor">
+                  <OpInfo><TableGroupProperties Grp="1.0" Remotable="False" Card="3.97297" AvgRowLength="24"/></OpInfo>
+                </LogOp>
+              </LogOp>
+              <ScaOp Id="ScaOp_Comp" CompOp="x_cmpEq"><OpInfo><ScalarGroupProperties Grp="Unknown"/></OpInfo>
+                <ScaOp Id="ScaOp_Identifier" Column="id"><OpInfo><ScalarGroupProperties Grp="Unknown"/></OpInfo>
+                </ScaOp>
+                <ScaOp Id="ScaOp_Identifier" Column="id1"><OpInfo><ScalarGroupProperties Grp="Unknown"/></OpInfo>
+                </ScaOp>
+              </ScaOp>
+            </LogOp>
+          </LogOp>
+        </LogOp>
+      </LogOp>
+      <LogOp Id="LogOp_Output" Table="C:\Users\37887\AppData\Local\USQLDataRoot\student/Total.csv" XMode="All" Out="id,name,maths,science,social,tamil,english,total" Udf="IOutputter">
+        <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+        <LogOp Id="LogOp_RestrRemap" Remove="id,name,maths,science,social,tamil,english,total" Remap="english#english,id#id,maths#maths,name#name,science#science,social#social,tamil#tamil,total#total">
+          <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+          <LogOp Id="LogOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__total" CSRoot="Common" TotalConsumers="2">
+            <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+            <LogOp Id="LogOp_Project">
+              <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+              <LogOp Id="LogOp_RestrRemap" Remove="name,id,Class,maths,science,social,tamil,english,id1" Remap="english#english,id#id,maths#maths,name#name,science#science,social#social,tamil#tamil">
+                <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+                <LogOp Id="LogOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__result" CSRoot="Common" TotalConsumers="2">
+                  <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+                </LogOp>
+              </LogOp>
+              <AncOp Id="AncOp_PrjList"><OpInfo><ScalarGroupProperties Grp="13.0"/></OpInfo>
+                <AncOp Id="AncOp_PrjEl" Column="total"><OpInfo><ScalarGroupProperties Grp="12.0"/></OpInfo>
+                  <ScaOp Id="ScaOp_Udf" Udf="(maths + science + social + tamil + english) / 5" UsedColumn="maths,science,social,tamil,english"><OpInfo><ScalarGroupProperties Grp="11.0"/></OpInfo>
+                  </ScaOp>
+                </AncOp>
+              </AncOp>
+            </LogOp>
+          </LogOp>
+        </LogOp>
+      </LogOp>
+      <LogOp Id="LogOp_Output" Table="C:\Users\37887\AppData\Local\USQLDataRoot\student/rank.csv" XMode="All" Out="id,name,maths,science,social,tamil,english,total,rank" Udf="IOutputter">
+        <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+        <LogOp Id="LogOp_SequenceProject">
+          <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+          <LogOp Id="LogOp_RestrRemap" Remove="id,name,maths,science,social,tamil,english,total" Remap="english#english,id#id,maths#maths,name#name,science#science,social#social,tamil#tamil,total#total">
+            <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+            <LogOp Id="LogOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__total" CSRoot="Common" TotalConsumers="2">
+              <OpInfo><TableGroupProperties Grp="Unknown" Remotable="False"/></OpInfo>
+            </LogOp>
+          </LogOp>
+          <AncOp Id="AncOp_PrjList"><OpInfo><ScalarGroupProperties Grp="Unknown"/></OpInfo>
+            <AncOp Id="AncOp_PrjEl" Column="rank"><OpInfo><ScalarGroupProperties Grp="20.0"/></OpInfo>
+              <ScaOp Id="ScaOp_SeqFunc" SortColumn="total DESC" Name="rank"><OpInfo><ScalarGroupProperties Grp="19.0"/></OpInfo>
+              </ScaOp>
+            </AncOp>
+          </AncOp>
+        </LogOp>
+      </LogOp>
+    </LogOp>
+</InputTree>
+<OutputTree>
+    <PhyOp Id="PhyOp_Sequence">
+      <OpInfo><TableGroupProperties Grp="24.1" Remotable="False" Card="0" CardFromHint="True" AvgRowLength="1" PrtnSkewFactor="1" HT="2562937399510102817:237::5:13814782442570468187" HTS="18327367281011533902"/><Costs TotalCosts="5.0317" BubbleCost="5.0317" BubblePartitions="394"/></OpInfo>
+      <PhyOp Id="PhyOp_Output" Table="C:\Users\37887\AppData\Local\USQLDataRoot\student/StudentMarksheet.csv" XMode="Serial" Out="id,name,maths,science,social,tamil,english" Udf="IOutputter">
+        <OpInfo><TableGroupProperties Grp="9.1" Remotable="False" Card="3.264" AvgRowLength="32" PrtnSkewFactor="1" HT="10135408382386097894:228::5:3417295062888585116" HTS="11958283979556372645"/><Costs TotalCosts="5.0316" BubbleCost="5.0316" BubblePartitions="398"/></OpInfo>
+        <PhyOp Id="PhyOp_RestrRemap">
+          <OpInfo><TableGroupProperties Grp="8.1" Remotable="False" Card="3.264" AvgRowLength="32" PrtnSkewFactor="1" HT="3417295062888585116:120::4:17687860923797998800" HTS="15299997865232150435"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+          <PhyOp Id="PhyOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__result" CSRoot="Common" TotalConsumers="2">
+            <OpInfo><TableGroupProperties Grp="7.1" Remotable="False" Card="3.264" AvgRowLength="32" PrtnSkewFactor="1" HT="17687860923797998800:166::3:12021569060082886980" HTS="742428383833799439"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+            <PhyOp Id="PhyOp_HashJoin" Build="Left" JoinType="x_jtInner" ParallelJoinType="Serial" LeftKey="id" RightKey="id1">
+              <OpInfo><TableGroupProperties Grp="6.2" Remotable="False" Card="3.264" AvgRowLength="32" PrtnSkewFactor="1" HT="12021569060082886980:30::2:8662544099427426831" HTS="7512780899488432493"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+              <PhyOp Id="PhyOp_Extract" Table="C:\Users\37887\AppData\Local\USQLDataRoot\Student/Student.csv" XMode="Serial" Udf="IExtractor">
+                <OpInfo><TableGroupProperties Grp="0.3" Remotable="False" Card="4.08" AvgRowLength="12" PrtnSkewFactor="1" HT="17864214671440246347:115::0:0" HTS="14373246477321077661"/><Costs TotalCosts="5.01579" BubbleCost="5.01579" BubblePartitions="399"/></OpInfo>
+              </PhyOp>
+              <PhyOp Id="PhyOp_RestrRemap">
+                <OpInfo><TableGroupProperties Grp="2.3" Remotable="False" Card="3.97297" AvgRowLength="24" PrtnSkewFactor="1" HT="1650505804108047879:120::1:15494579882811084030" HTS="15602422722328810187"/><Costs TotalCosts="5.01579" BubbleCost="5.01579" BubblePartitions="399"/></OpInfo>
+                <PhyOp Id="PhyOp_Extract" Table="C:\Users\37887\AppData\Local\USQLDataRoot\Student/Marksheet.csv" XMode="Serial" Udf="IExtractor">
+                  <OpInfo><TableGroupProperties Grp="1.3" Remotable="False" Card="3.97297" AvgRowLength="24" PrtnSkewFactor="1" HT="15494579882811084030:115::0:0" HTS="7566597798220421064"/><Costs TotalCosts="5.01579" BubbleCost="5.01579" BubblePartitions="399"/></OpInfo>
+                </PhyOp>
+              </PhyOp>
+              <ScaOp Id="ScaOp_Comp" CompOp="x_cmpEq"><OpInfo><ScalarGroupProperties Grp="5.0"/></OpInfo>
+                <ScaOp Id="ScaOp_Identifier" Column="id"><OpInfo><ScalarGroupProperties Grp="3.0"/></OpInfo>
+                </ScaOp>
+                <ScaOp Id="ScaOp_Identifier" Column="id1"><OpInfo><ScalarGroupProperties Grp="4.0"/></OpInfo>
+                </ScaOp>
+              </ScaOp>
+            </PhyOp>
+          </PhyOp>
+        </PhyOp>
+      </PhyOp>
+      <PhyOp Id="PhyOp_Output" Table="C:\Users\37887\AppData\Local\USQLDataRoot\student/Total.csv" XMode="Serial" Out="id,name,maths,science,social,tamil,english,total" Udf="IOutputter">
+        <OpInfo><TableGroupProperties Grp="17.1" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="5314176217451531062:228::6:13673475008543913083" HTS="35787610050921895"/><Costs TotalCosts="5.0316" BubbleCost="5.0316" BubblePartitions="398"/></OpInfo>
+        <PhyOp Id="PhyOp_RestrRemap">
+          <OpInfo><TableGroupProperties Grp="16.1" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="13673475008543913083:120::5:13639540328803320576" HTS="7769989387508376913"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+          <PhyOp Id="PhyOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__total" CSRoot="Common" TotalConsumers="2">
+            <OpInfo><TableGroupProperties Grp="15.1" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="13639540328803320576:166::4:1893170729575534663" HTS="2251782750837511031"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+            <PhyOp Id="PhyOp_ComputeScalar">
+              <OpInfo><TableGroupProperties Grp="14.1" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="1893170729575534663:212::3:4473568435387150252" HTS="12676883130837516885"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+              <PhyOp Id="PhyOp_RestrRemap">
+                <OpInfo><TableGroupProperties Grp="10.1" Remotable="False" Card="3.264" AvgRowLength="32" PrtnSkewFactor="1" HT="3417295062888585116:120::4:17687860923797998800" HTS="15299997865232150435"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+                <PhyOp Id="PhyOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__result" CSRoot="Common" TotalConsumers="2">
+                  <OpInfo><TableGroupProperties Grp="7.1" Remotable="False" Card="3.264" AvgRowLength="32" PrtnSkewFactor="1" HT="17687860923797998800:166::3:12021569060082886980" HTS="742428383833799439"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+                </PhyOp>
+              </PhyOp>
+              <AncOp Id="AncOp_PrjList"><OpInfo><ScalarGroupProperties Grp="13.0"/></OpInfo>
+                <AncOp Id="AncOp_PrjEl" Column="total"><OpInfo><ScalarGroupProperties Grp="12.0"/></OpInfo>
+                  <ScaOp Id="ScaOp_Udf" Udf="(maths + science + social + tamil + english) / 5" UsedColumn="maths,science,social,tamil,english"><OpInfo><ScalarGroupProperties Grp="11.0"/></OpInfo>
+                  </ScaOp>
+                </AncOp>
+              </AncOp>
+            </PhyOp>
+          </PhyOp>
+        </PhyOp>
+      </PhyOp>
+      <PhyOp Id="PhyOp_Output" Table="C:\Users\37887\AppData\Local\USQLDataRoot\student/rank.csv" XMode="Serial" Out="id,name,maths,science,social,tamil,english,total,rank" Udf="IOutputter">
+        <OpInfo><TableGroupProperties Grp="23.1" Remotable="False" Card="3.264" AvgRowLength="44" PrtnSkewFactor="1" HT="16811941916442390847:228::4:14350238100138019069" HTS="8478435260312105523"/><Costs TotalCosts="5.0317" BubbleCost="5.0317" BubblePartitions="398"/></OpInfo>
+        <PhyOp Id="PhyOp_ComputeSequence" LgOption="Normal">
+          <OpInfo><TableGroupProperties Grp="22.1" Remotable="False" Card="3.264" AvgRowLength="44" PrtnSkewFactor="1" HT="14350238100138019069:24:0:3:14581923436779310701" HTS="13059165929694608008"/><Costs TotalCosts="5.02154" BubbleCost="5.02154" BubblePartitions="398"/></OpInfo>
+          <PhyOp Id="PhyOp_Sort" SortColumn="total DESC">
+            <OpInfo><TableGroupProperties Grp="18.2" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="13673475008543913083:120::5:13639540328803320576" HTS="7769989387508376913"/><Costs TotalCosts="5.02154" BubbleCost="5.02154" BubblePartitions="398"/></OpInfo>
+            <PhyOp Id="PhyOp_RestrRemap">
+              <OpInfo><TableGroupProperties Grp="18.3" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="13673475008543913083:120::5:13639540328803320576" HTS="7769989387508376913"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+              <PhyOp Id="PhyOp_Spool" Name="__SCOPE_PARAMETER_PREFIX__total" CSRoot="Common" TotalConsumers="2">
+                <OpInfo><TableGroupProperties Grp="15.1" Remotable="False" Card="3.264" AvgRowLength="36" PrtnSkewFactor="1" HT="13639540328803320576:166::4:1893170729575534663" HTS="2251782750837511031"/><Costs TotalCosts="5.02144" BubbleCost="5.02144" BubblePartitions="398"/></OpInfo>
+              </PhyOp>
+            </PhyOp>
+          </PhyOp>
+          <AncOp Id="AncOp_PrjList"><OpInfo><ScalarGroupProperties Grp="21.0"/></OpInfo>
+            <AncOp Id="AncOp_PrjEl" Column="rank"><OpInfo><ScalarGroupProperties Grp="20.0"/></OpInfo>
+              <ScaOp Id="ScaOp_SeqFunc" SortColumn="total DESC" Name="rank"><OpInfo><ScalarGroupProperties Grp="19.0"/></OpInfo>
+              </ScaOp>
+            </AncOp>
+          </AncOp>
+        </PhyOp>
+      </PhyOp>
+    </PhyOp>
+</OutputTree>
+</OptimizerTrees>
+  </OptimizerPlanInfo>
+  <ScopeCounters>
+    <Counter Name="Overall" Value="20.1276084" Unit="second" Intervals="0" />
+    <Counter Name="ResourcesDownloading" Value="0" Unit="second" Intervals="0" />
+    <Counter Name="FrontEndRun" Value="2.7864114" Unit="second" Intervals="1" />
+    <Counter Name="AstBuilder" Value="1.7513996" Unit="second" Intervals="1" />
+    <Counter Name="SyntaxVerifier" Value="0.1690287" Unit="second" Intervals="1" />
+    <Counter Name="DdlResolver" Value="1.2712251" Unit="second" Intervals="1" />
+    <Counter Name="RoslynStartup" Value="0.1421386" Unit="second" Intervals="5" />
+    <Counter Name="SMS" Value="0.0618837" Unit="second" Intervals="2" />
+    <Counter Name="ConstantFolding" Value="0.6834121" Unit="second" Intervals="5" />
+    <Counter Name="ResourceReferencePass" Value="0.0033842" Unit="second" Intervals="1" />
+    <Counter Name="InputOutputPass" Value="0.1235392" Unit="second" Intervals="1" />
+    <Counter Name="FileSetExpansion" Value="0" Unit="second" Intervals="0" />
+    <Counter Name="SStreamMetadataWait" Value="0.0001251" Unit="second" Intervals="4" />
+    <Counter Name="SStreamMetadataAsync" Value="0" Unit="second" Intervals="0" />
+    <Counter Name="BinderPass" Value="0.6771556" Unit="second" Intervals="1" />
+    <Counter Name="ExpressionBinding" Value="0.5922899" Unit="second" Intervals="9" />
+    <Counter Name="OneColumnBinding" Value="0.0032227" Unit="second" Intervals="1" />
+    <Counter Name="QualifiedColumnBinding" Value="0.0031663" Unit="second" Intervals="1" />
+    <Counter Name="SimpleAggregateBinding" Value="0" Unit="second" Intervals="0" />
+    <Counter Name="RoslynFirstCall" Value="0.2350203" Unit="second" Intervals="1" />
+    <Counter Name="RoslynBinding" Value="0.344931" Unit="second" Intervals="7" />
+    <Counter Name="RoslynParsing" Value="0.0329796" Unit="second" Intervals="7" />
+    <Counter Name="RoslynPreSemantic" Value="0.0091848" Unit="second" Intervals="7" />
+    <Counter Name="RoslynSemantic" Value="0.1487106" Unit="second" Intervals="7" />
+    <Counter Name="RoslynPostSemantic" Value="0.1533028" Unit="second" Intervals="7" />
+    <Counter Name="SemanticAnalyzerPass" Value="0.0758293" Unit="second" Intervals="1" />
+    <Counter Name="ErrorReporterPass" Value="0.0343896" Unit="second" Intervals="1" />
+    <Counter Name="GenerateOptTreePass" Value="0.1251431" Unit="second" Intervals="1" />
+    <Counter Name="OptimizerWait" Value="2.13E-05" Unit="second" Intervals="1" />
+    <Counter Name="Playback" Value="0.0385334" Unit="second" Intervals="2" />
+    <Counter Name="Optimizer" Value="0.7856317" Unit="second" Intervals="1" />
+    <Counter Name="CodeGeneration" Value="0.8722624" Unit="second" Intervals="1" />
+    <Counter Name="AlgebraAndManagedCodeGen" Value="0.3089761" Unit="second" Intervals="1" />
+    <Counter Name="ComputeSignature" Value="2.56E-05" Unit="second" Intervals="1" />
+    <Counter Name="PostProcessExecutionPlan" Value="0.0059004" Unit="second" Intervals="1" />
+    <Counter Name="CreateSplitersOrSpools" Value="0.0668963" Unit="second" Intervals="1" />
+    <Counter Name="ReplaceFusionPipelinesWithAdapters" Value="5.5E-06" Unit="second" Intervals="1" />
+    <Counter Name="CreateWhereSelectEnumerators" Value="0.016967" Unit="second" Intervals="1" />
+    <Counter Name="ComputePayloadMetadata" Value="0.0005195" Unit="second" Intervals="1" />
+    <Counter Name="SStreamStageProcessing" Value="0.0040324" Unit="second" Intervals="1" />
+    <Counter Name="ValidateStages" Value="0.0028635" Unit="second" Intervals="1" />
+    <Counter Name="CompileToAlgebra" Value="0.058413" Unit="second" Intervals="1" />
+    <Counter Name="AnnotateIntermediateResults" Value="0.0061791" Unit="second" Intervals="1" />
+    <Counter Name="CreateCppReadyStage" Value="0.037723" Unit="second" Intervals="1" />
+    <Counter Name="AdornAllWithMemoryModel" Value="0.0724367" Unit="second" Intervals="1" />
+    <Counter Name="SplitScopeVertices" Value="0.031635" Unit="second" Intervals="1" />
+    <Counter Name="EstimateMemorySize" Value="0.001442" Unit="second" Intervals="1" />
+    <Counter Name="CalculateBubbles" Value="0.0002119" Unit="second" Intervals="1" />
+    <Counter Name="ManagedCodeEmission" Value="0.0045037" Unit="second" Intervals="1" />
+    <Counter Name="NativeCodeGeneration" Value="0.5548223" Unit="second" Intervals="1" />
+    <Counter Name="CodeCompiling" Value="14.341587" Unit="second" Intervals="1" />
+    <Counter Name="EmitCompilationResult" Value="0.4012783" Unit="second" Intervals="1" />
+    <Counter Name="Table Files Read" Value="0" Unit="count" />
+    <Counter Name="CQO - Init" Value="0.0108131921575934" Unit="second" />
+    <Counter Name="CQO - CopyIn" Value="0.263736172638424" Unit="second" />
+    <Counter Name="CQO - Search - Init" Value="0.000164219039776536" Unit="second" />
+    <Counter Name="CQO - Search - NNF" Value="0.000131848940589815" Unit="second" />
+    <Counter Name="CQO - Search - PreOptimization" Value="0.000598057320340028" Unit="second" />
+    <Counter Name="CQO - Search - Simplification" Value="0.0109103024551536" Unit="second" />
+    <Counter Name="CQO - Search - Join Reordering" Value="0.0030451578673947" Unit="second" />
+    <Counter Name="CQO - Search - Expression Sharing" Value="0.000581872270746668" Unit="second" />
+    <Counter Name="CQO - Search - Optimization" Value="0.00371269247379404" Unit="second" />
+    <Counter Name="CQO - Search - Subtotal" Value="0.0423858815838611" Unit="second" />
+    <Counter Name="CQO - Showplan" Value="0.00836411782400298" Unit="second" />
+    <Counter Name="CQO - Stage Generation" Value="0.213437775589945" Unit="second" />
+    <Counter Name="CQO - PostOptimization" Value="0.00512671314802373" Unit="second" />
+    <Counter Name="Working Set" Value="93728" Unit="KB" />
+    <Counter Name="Peak Working Set" Value="113388" Unit="KB" />
+    <Counter Name="Private Memory" Value="72388" Unit="KB" />
+    <Counter Name="Virtual Memory" Value="779408" Unit="KB" />
+    <Counter Name="Total CPU" Value="6.3125" Unit="second" />
+    <Counter Name="CQO - Total" Value="0.564069110951278" Unit="second" />
+  </ScopeCounters>
+</CSSRelatedInfo>

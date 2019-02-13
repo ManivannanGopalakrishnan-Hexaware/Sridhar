@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptAndGraph GraphType="VertexCommands">
+  <Vertices count="5">
+    <Vertex index="1" command="-scopeVertex SV1_Extract  -i C:\Users\37887\AppData\Local\USQLDataRoot\Student\Student.csv  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0" />
+    <Vertex index="2" command="-scopeVertex SV2_Extract  -i C:\Users\37887\AppData\Local\USQLDataRoot\Student\Marksheet.csv  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV2_Extract_out0" />
+    <Vertex index="3" command="-scopeVertex SV3_Combine_Split  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -ichannel SV1_Extract_out0 -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV2_Extract_out0 -ichannel SV2_Extract_out0  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out0(WITH_HEADER) -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1" />
+    <Vertex index="4" command="-scopeVertex SV4_Process  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -ichannel SV3_Combine_Split_out1  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV4_Process_out0(WITH_HEADER)" />
+    <Vertex index="5" command="-scopeVertex SV5_Process  -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out1 -ichannel SV3_Combine_Split_out1  -o D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV5_Process_out0(WITH_HEADER)" />
+    <Vertex command="-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV3_Combine_Split_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv" />
+    <Vertex command="-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV4_Process_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv" />
+    <Vertex command="-concatenate -i D:\Challenger\Data-Lake-master\Data-Lake-master\StudentReport\StudentReport\bin\Debug\Script\_TMP\scopetmpfile._SV5_Process_out0 -o C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv" />
+  </Vertices>
+  <Outputs>
+    <Output path="C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv" isBinary="False" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int" />
+    <Output path="C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv" isBinary="False" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int" />
+    <Output path="C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv" isBinary="False" schema="id:int,name:string,maths:int,science:int,social:int,tamil:int,english:int,total:int,rank:long?" />
+  </Outputs>
+  <graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough">
+    <process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="125829121" nativeExecutionMemorySize="268435456" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="Extract_0[ALL]" streamSize="102">
+        <cosmosStream cosmosPath="C:\Users\37887\AppData\Local\USQLDataRoot\Student\Student.csv" streamSize="102" />
+      </input>
+      <output id="SV1_Extract_out0" />
+    </process>
+    <process id="SV2_Extract" command="ScopeEngine.dll -scopeVertex SV2_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="125829121" nativeExecutionMemorySize="285212672" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="Extract_1[ALL]" streamSize="147">
+        <cosmosStream cosmosPath="C:\Users\37887\AppData\Local\USQLDataRoot\Student\Marksheet.csv" streamSize="147" />
+      </input>
+      <output id="SV2_Extract_out0" />
+    </process>
+    <process id="SV3_Combine_Split" command="ScopeEngine.dll -scopeVertex SV3_Combine_Split" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="67108868" nativeExecutionMemorySize="5851054076" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="SV1_Extract_out0" />
+      <input id="SV2_Extract_out0" />
+      <output id="SV3_Combine_Split_out0" cosmosStream="C:\Users\37887\AppData\Local\USQLDataRoot\student\StudentMarksheet.csv" />
+      <output id="SV3_Combine_Split_out1" />
+    </process>
+    <process id="SV4_Process" command="ScopeEngine.dll -scopeVertex SV4_Process" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="33554434" nativeExecutionMemorySize="8388608" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="SV3_Combine_Split_out1" />
+      <output id="SV4_Process_out0" cosmosStream="C:\Users\37887\AppData\Local\USQLDataRoot\student\Total.csv" />
+    </process>
+    <process id="SV5_Process" command="ScopeEngine.dll -scopeVertex SV5_Process" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="58720259" nativeExecutionMemorySize="5859442685" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="SV3_Combine_Split_out1" />
+      <output id="SV5_Process_out0" cosmosStream="C:\Users\37887\AppData\Local\USQLDataRoot\student\rank.csv" />
+    </process>
+  </graph>
+  <Scopescript>// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+@student = EXTRACT name string, id int, Class string FROM "/Student/Student.csv" USING Extractors.Csv();
+
+@marksheet = EXTRACT id int, maths int, science int, social int, tamil int, english int FROM "/Student/Marksheet.csv" USING Extractors.Csv();
+
+@result = SELECT stu.id, stu.name, mrk.maths, mrk.science, mrk.social, mrk.tamil, mrk.english FROM @student AS stu JOIN @marksheet AS mrk ON stu.id == mrk.id;
+
+OUTPUT @result
+TO "/student/StudentMarksheet.csv"
+USING Outputters.Csv();
+
+@total = SELECT id, name, maths, science, social, tamil, english, ((maths + science + social + tamil + english) / 5) AS total FROM @result;
+
+OUTPUT @total
+TO "/student/Total.csv"
+USING Outputters.Csv();
+
+@rank = SELECT *, RANK() OVER(ORDER BY total DESC) AS rank FROM @total;
+
+OUTPUT @rank
+TO "/student/rank.csv"
+USING Outputters.Csv();
+
+
+
+
+
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+</Scopescript>
+  <Optimization succeeded="true" time="00:00:00.7856317" latency="-1" totalCost="-1" />
+  <ScopeVertexAnnotations>
+    <ScopeVertex name="SV1_Extract">
+      <Operation annotation="EXTRACT USING IExtractor" />
+    </ScopeVertex>
+    <ScopeVertex name="SV2_Extract">
+      <Operation annotation="EXTRACT USING IExtractor" />
+    </ScopeVertex>
+    <ScopeVertex name="SV4_Process">
+      <Operation annotation="OUTPUT USING IOutputter" />
+    </ScopeVertex>
+    <ScopeVertex name="SV5_Process">
+      <Operation annotation="OUTPUT USING IOutputter" />
+    </ScopeVertex>
+  </ScopeVertexAnnotations>
+</ScriptAndGraph>

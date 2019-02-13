@@ -1,0 +1,65 @@
+﻿{
+"CompilerPlanStart":"2\/6\/2019 3:54:04 PM"
+},
+{
+"Settings":"-c++ -mp -pdb Partial -OUTPUT_PATH C:\\Users\\37887\\AppData\\Local\\USQLDataRoot -cosmosCluster localhost -apEnvironment Default -apCluster localhost -Off EnableScopeVertexResourceMode -On ForceShadowCopy -On ADL -Off Sirius -On USQL -Off SQLIPSQLProxy -Off SQLIPSQLProxyNative -Off PolarisScaleUp -buckets 1 -SplitPartitionThreshold 52428800 -ClientVersion 10.2.2.0"
+},
+{
+"statementText":" EXTRACT name string, id int, Class string FROM \"\/Student\/Student.csv\" USING Extractors.Csv()"
+,
+{
+"NodeName":"QueryStatement"
+}}
+,
+{
+"statementText":" EXTRACT id int, maths int, science int, social int, tamil int, english int FROM \"\/Student\/Marksheet"
+,
+{
+"NodeName":"QueryStatement"
+}}
+,
+{
+"statementText":" SELECT stu.id, stu.name, mrk.maths, mrk.science, mrk.social, mrk.tamil, mrk.english FROM @student A"
+,
+{
+"NodeName":"QueryStatement"
+}}
+,
+{
+"statementText":"OUTPUT @resultTO \"\/student\/StudentMarksheet.csv\"USING Outputters.Csv()"
+,
+{
+"NodeName":"OutputStatement"
+}}
+,
+{
+"statementText":" SELECT id, name, maths, science, social, tamil, english, ((maths + science + social + tamil + engli"
+,
+{
+"NodeName":"QueryStatement"
+}}
+,
+{
+"statementText":"OUTPUT @totalTO \"\/student\/Total.csv\"USING Outputters.Csv()"
+,
+{
+"NodeName":"OutputStatement"
+}}
+,
+{
+"statementText":" SELECT *, RANK() OVER(ORDER BY total DESC) AS rank FROM @total"
+,
+{
+"NodeName":"QueryStatement"
+}}
+,
+{
+"statementText":"OUTPUT @rankTO \"\/student\/rank.csv\"USING Outputters.Csv()"
+,
+{
+"NodeName":"OutputStatement"
+}}
+,
+{
+"CompilerPlanEnd":"2\/6\/2019 3:54:04 PM"
+}
